@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Built-By: Rzepa
+Created-By: IntelliJ IDEA
+Build-Jdk: 11
+
