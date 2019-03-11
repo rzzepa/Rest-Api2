@@ -40,9 +40,19 @@ public class CrmEmployee {
     @Size(min = 1, message = "is required")
     private String email;
 
+    private String role;
+
 
     @NotNull(message = "is required")
     private float salary;
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 
     public String getUserName() {
         return userName;

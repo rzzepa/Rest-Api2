@@ -1,8 +1,11 @@
 package spring.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import spring.entity.Customer;
+
+import java.io.PrintWriter;
 import java.util.List;
 import spring.service.CustomerService;
 
@@ -17,10 +20,29 @@ public class CustomerRestController {
 
 
     @GetMapping("/customers")
-    public List<Customer> getCustomers() {
+    public String getCustomers(Model theModel) {
 
 
-        return Customerservice.getCustomers();
+        List<Customer> customers = Customerservice.getCustomers();
+        theModel.addAttribute("customers", customers);
+
+        String str = "<head><style>" +
+                "table {border-collapse: collapse;width: 100%;}" +
+                "th, td {text-align: left padding: 8px; }" +
+                "tr:nth-child(even){background-color: #f2f2f2}" +
+                "th {background-color: #4CAF50;  color: white}" +
+                "</style></head><body><table><tr><th>Id</th><th>First Name</th><th>Last Name</th><th>Adress</th><th>User</th>";
+        for (int i = 0; i < customers.size(); i++) {
+            str += "<tr>";
+            str += "<td>" + customers.get(i).getId() + "</td>";
+            str += "<td>" + customers.get(i).getFirstName() + "</td>";
+            str += "<td>" + customers.get(i).getLastName() + "</td>";
+            str += "<td>" + customers.get(i).getAdress() + "</td>";
+            str += "<td>" + customers.get(i).getUser().getUsername() + "</td>";
+        }
+        str += "</body>";
+        // return str;
+        return "customer-service.jsp";
     }
 
 

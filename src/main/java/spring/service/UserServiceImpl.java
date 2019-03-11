@@ -100,7 +100,7 @@ public class UserServiceImpl implements UserService {
 
         // give user default role of "employee"
         HashSet<Authority> authorities = new HashSet<>();
-        Authority newOne = new Authority("ROLE_EMPLOYEE",crmEmployee.getUserName());
+        Authority newOne = new Authority(crmEmployee.getRole(), crmEmployee.getUserName());
         authorities.add(newOne);
         user.setAuthorities(authorities);
 

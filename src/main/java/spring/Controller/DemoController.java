@@ -1,16 +1,12 @@
 package spring.Controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class DemoController {
 
-	@GetMapping("/")
-	public String showHome() {
-		
-		return "home.jsp";
-	}
 
     @GetMapping("/leaders")
     public String showLeaders() {
@@ -22,5 +18,23 @@ public class DemoController {
     public String showAdmin() {
 
         return "admins.jsp";
+    }
+
+    @GetMapping("/")
+    public String home(Model model) {
+
+
+        return "home.jsp";
+
+
+    }
+
+    @GetMapping("/customer-service")
+    public String test(Model model) {
+
+
+        return "customer-service.jsp";
+
+
     }
 }

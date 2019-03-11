@@ -2,6 +2,7 @@ package spring.config;
 
 import java.beans.PropertyVetoException;
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 import javax.sql.DataSource;
@@ -13,16 +14,18 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.http.CacheControl;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
+import org.springframework.web.servlet.view.JstlView;
+
 
 @Configuration
 @EnableWebMvc
@@ -33,9 +36,34 @@ public class AppConfig implements WebMvcConfigurer {
 
 	@Autowired
 	private Environment env;
+
 	
 	private Logger logger = Logger.getLogger(getClass().getName());
-	
+
+
+	@Bean
+	public InternalResourceViewResolver viewResolver() {
+		InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
+		viewResolver.setViewClass(JstlView.class);
+		viewResolver.setPrefix("WEB-INF/views/");
+		return viewResolver;
+	}
+
+	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+
+		// Register resource handler for CSS and JS
+		registry.addResourceHandler("/resources/**").addResourceLocations("classpath:/statics/", "D:/statics/")
+				.setCacheControl(CacheControl.maxAge(2, TimeUnit.HOURS).cachePublic());
+
+		// Register resource handler for images
+		registry.addResourceHandler("/images/**").addResourceLocations("/WEB-INF/images/")
+				.setCacheControl(CacheControl.maxAge(2, TimeUnit.HOURS).cachePublic());
+	}
+
+
+
+
 	// define a bean for ViewResolver
 
 	@Bean
@@ -93,7 +121,7 @@ public class AppConfig implements WebMvcConfigurer {
 		int intPropVal = Integer.parseInt(propVal);
 		
 		return intPropVal;
-	}	
+	}
 	
 	@Bean
 	public LocalSessionFactoryBean sessionFactory(){

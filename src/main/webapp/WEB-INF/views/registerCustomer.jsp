@@ -104,7 +104,9 @@
     </div>
 
 </form:form>
-
+<form action="${pageContext.request.contextPath}/">
+    <input type="submit" value="Back"/>
+</form>
 
 </body>
 </html>
