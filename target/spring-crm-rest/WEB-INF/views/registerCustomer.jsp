@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>Register New Employee</title>
+    <title>Register New User Form</title>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -22,8 +22,8 @@
 <body>
 
 
-<form:form action="${pageContext.request.contextPath}/processRegistrationFormEmployee"
-           modelAttribute="crmEmployee"
+<form:form action="${pageContext.request.contextPath}/processRegistrationForm"
+           modelAttribute="crmUser"
            class="form-horizontal">
 
     <!-- Place for messages: error, alert etc ... -->
@@ -95,13 +95,6 @@
     </div>
 
 
-    <div style="margin-bottom: 25px" class="input-group">
-        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-        <form:errors path="salary" cssClass="error" />
-        <form:input path="salary" placeholder="salary (*)" class="form-control" />
-    </div>
-
-
 
     <!-- Register Button -->
     <div style="margin-top: 10px" class="form-group">
@@ -111,7 +104,9 @@
     </div>
 
 </form:form>
-
+<form action="${pageContext.request.contextPath}/">
+    <input type="submit" value="Back" />
+</form>
 
 </body>
 </html>
